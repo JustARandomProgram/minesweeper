@@ -19,4 +19,4 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 
 ## CREDIT
 
-JustARandomProgrammer on GitHub
+JustARandomProgram on GitHub
