@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import classes.Tile;
@@ -5,10 +6,16 @@ import classes.Tile;
 public class Model {
     private ArrayList<ArrayList<Tile>> board = new ArrayList<>();
     private int width, height;
+    private double mineDensity = 0.5;
 
     public Model setGridDimensions(int newWidth, int newHeight) {
         width = newWidth;
         height = newHeight;
+        return this;
+    }
+
+    public Model setMineDensity(double newDensity) {
+        mineDensity = newDensity;
         return this;
     }
 
@@ -28,5 +35,9 @@ public class Model {
 
     public ArrayList<ArrayList<Tile>> getBoard() {
         return board;
+    }
+
+    public Dimension getGridDimensions() {
+        return new Dimension(width, height);
     }
 }
