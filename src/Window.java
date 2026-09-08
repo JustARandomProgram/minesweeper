@@ -1,6 +1,10 @@
 import javax.swing.*;
+
+import classes.Tile;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class Window extends JFrame {
     protected final int width, height;
@@ -18,6 +22,18 @@ public class Window extends JFrame {
             g2d.drawImage(classes.ImageCacher.start.getImage(), 337, 12, 75, 75, null);
         }
 
+        public void paintGrid(Graphics2D g2d) {
+            Dimension gridTileDimension = App.controller.getGridDimensions();
+            int numOfColumns = gridTileDimension.width, numOfRows = gridTileDimension.height;
+            int tileWidth = width/numOfColumns, tileHeight = (height-100)/numOfRows;
+            ArrayList<ArrayList<Tile>> board = App.controller.getBoard();
+            for (int column = 0; column < numOfColumns; column++) {
+                for (int row = 0; row < numOfRows; row++) {
+                    g2d.drawImage(board.get(column).get(row).getImage().getImage(), tileWidth*column, 100+tileHeight*row, tileWidth, tileHeight, null);
+                }
+            }
+        }
+
         @Override
         public void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D)g;
@@ -25,7 +41,7 @@ public class Window extends JFrame {
             g2d.fill(background);
             g2d.setColor(Color.GRAY);
             paintPanel(g2d);
-
+            paintGrid(g2d);
         }
     }
 
