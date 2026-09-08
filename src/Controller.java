@@ -23,7 +23,7 @@ public class Controller {
 
     public void setUpListeners() {
         window.startButton.addActionListener(e -> {
-            
+            System.out.println("start");
         });
     }
 }
