@@ -7,9 +7,16 @@ public class Window extends JFrame {
     private Canvas canvas;
     private Timer timer;
 
+    public JButton startButton;
+
     public class Canvas extends JPanel {
         private Rectangle2D background = new Rectangle2D.Double(0, 0, width, height);
         private Rectangle2D panel = new Rectangle2D.Double(0, 0, width, 100);
+
+        public void paintPanel(Graphics2D g2d) {
+            g2d.fill(panel);
+            g2d.drawImage(classes.ImageCacher.start.getImage(), 337, 12, 75, 75, null);
+        }
 
         @Override
         public void paintComponent(Graphics g) {
@@ -17,7 +24,8 @@ public class Window extends JFrame {
             g2d.setColor(this.getBackground());
             g2d.fill(background);
             g2d.setColor(Color.GRAY);
-            g2d.fill(panel);
+            paintPanel(g2d);
+
         }
     }
 
@@ -30,6 +38,15 @@ public class Window extends JFrame {
         
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
+        canvas.setLayout(null);
+
+        startButton = new JButton();
+        startButton.setBounds(337, 12, 75, 75);
+        startButton.setOpaque(true);
+        startButton.setContentAreaFilled(false);
+        startButton.setBorderPainted(false);
+        startButton.setFocusPainted(false);
+        canvas.add(startButton);
 
         add(canvas);
 
