@@ -6,7 +6,7 @@ import classes.Tile;
 public class Model {
     private ArrayList<ArrayList<Tile>> board = new ArrayList<>();
     private int width, height;
-    private double mineDensity = 0.5;
+    private double mineDensity = 0.1;
 
     public Model setGridDimensions(int newWidth, int newHeight) {
         width = newWidth;
