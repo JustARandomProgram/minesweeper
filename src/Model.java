@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Random;
 
 import classes.Tile;
 
@@ -30,6 +31,25 @@ public class Model {
                 column.add(y, new Tile());
             }
             board.add(x, column);
+        }
+        int totalNumOfMines = (int)Math.floor((width * height) * mineDensity);
+        Random random = new Random();
+        int randMineX = random.nextInt(0, width);
+        int randMineY = random.nextInt(0, height);
+        Tile tile = board.get(randMineX).get(randMineY);
+        for (int mine = 0; mine < totalNumOfMines; mine++) {
+            while (tile.isMine) {
+                randMineX = random.nextInt(0, width);
+                randMineY = random.nextInt(0, height);
+                tile = board.get(randMineX).get(randMineY);
+            }
+            tile.isMine = true;
+            for (int otherX = Math.max(0, randMineX-1); otherX < Math.min(width, randMineX+2); otherX++) {
+                for (int otherY = Math.max(0, randMineY-1); otherY < Math.min(height, randMineY+2); otherY++) {
+                    if (board.get(otherX).get(otherY).isMine) continue;
+                    board.get(otherX).get(otherY).nearbyMines += 1;
+                }
+            }
         }
     }
 

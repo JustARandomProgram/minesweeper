@@ -9,9 +9,9 @@ public class Tile {
     public boolean dug = false;
 
     public ImageIcon getImage() {
-        if (isMine && dug) return ImageCacher.mine;
+        if (isMine) return ImageCacher.mine;
         if (flagged) return ImageCacher.flagged;
-        if (dug) {
+        if (!dug) {
             switch (nearbyMines) {
                 case 1:
                     return ImageCacher.one;
