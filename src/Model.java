@@ -134,11 +134,15 @@ public class Model {
         return gameState;
     }
 
-    public void incrementFlags() {
+    public void incrementFlagsOnBoard() {
         flagsOnBoard++;
     }
 
-    public void decrementFlags() {
+    public void decrementFlagsOnBoard() {
         flagsOnBoard--;
+    }
+
+    public int getFlagsOnBoard() {
+        return flagsOnBoard;
     }
 }
