@@ -35,25 +35,27 @@ public class Controller {
                     break;
                 }
             }
-            switch (e.getButton()) {
-                case MouseEvent.BUTTON1:
-                    // System.out.println(mouseGridX + " " + mouseGridY);
-                    model.dig(mouseGridX, mouseGridY);
-                    break;
-                case MouseEvent.BUTTON3:
-                    Tile tile = model.getTile(mouseGridX, mouseGridY);
-                    if (tile.dug) return;
-                    tile.flagged = !tile.flagged;
-                    for (int otherX = Math.max(0, mouseGridX-1); otherX < Math.min(numOfColumns, mouseGridX+2); otherX++) {
-                        for (int otherY = Math.max(0, mouseGridY-1); otherY < Math.min(numOfRows, mouseGridY+2); otherY++) {
-                            if (model.getTile(otherX,otherY).isMine) continue;
-                            model.getTile(otherX, otherY).nearbyFlags += tile.flagged ? 1 : -1;
+            if (model.getGameState() == 0) {
+                switch (e.getButton()) {
+                    case MouseEvent.BUTTON1:
+                        // System.out.println(mouseGridX + " " + mouseGridY);
+                        model.dig(mouseGridX, mouseGridY);
+                        break;
+                    case MouseEvent.BUTTON3:
+                        Tile tile = model.getTile(mouseGridX, mouseGridY);
+                        if (tile.dug) return;
+                        tile.flagged = !tile.flagged;
+                        for (int otherX = Math.max(0, mouseGridX-1); otherX < Math.min(numOfColumns, mouseGridX+2); otherX++) {
+                            for (int otherY = Math.max(0, mouseGridY-1); otherY < Math.min(numOfRows, mouseGridY+2); otherY++) {
+                                if (model.getTile(otherX,otherY).isMine) continue;
+                                model.getTile(otherX, otherY).nearbyFlags += tile.flagged ? 1 : -1;
+                            }
                         }
-                    }
-                    break;
-                case MouseEvent.BUTTON2:
-                    System.out.println(model.getTile(mouseGridX, mouseGridY).isMine);
-                    break;
+                        break;
+                    case MouseEvent.BUTTON2:
+                        System.out.println(model.getTile(mouseGridX, mouseGridY).isMine);
+                        break;
+                }
             }
         }
 
