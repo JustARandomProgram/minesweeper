@@ -51,8 +51,8 @@ public class Model {
             tile.isMine = true;
             for (int otherX = Math.max(0, randMineX-1); otherX < Math.min(width, randMineX+2); otherX++) {
                 for (int otherY = Math.max(0, randMineY-1); otherY < Math.min(height, randMineY+2); otherY++) {
-                    if (board.get(otherX).get(otherY).isMine) continue;
-                    board.get(otherX).get(otherY).nearbyMines += 1;
+                    if (getTile(otherX,otherY).isMine) continue;
+                    getTile(otherX, otherY).nearbyMines += 1;
                 }
             }
         }
@@ -63,14 +63,26 @@ public class Model {
         bfs.offer(getTile(x, y));
         while (!bfs.isEmpty()) {
             Tile currentTile = bfs.poll();
-            if (currentTile.isMine) continue;
-            if (currentTile.nearbyMines > 0) continue;
             if (currentTile.flagged) continue;
-            if (!getTile(currentTile.x - 1, currentTile.y).dug) bfs.offer(getTile(currentTile.x - 1, currentTile.y));
-            if (!getTile(currentTile.x + 1, currentTile.y).dug) bfs.offer(getTile(currentTile.x + 1, currentTile.y));
-            if (!getTile(currentTile.x, currentTile.y - 1).dug) bfs.offer(getTile(currentTile.x, currentTile.y - 1));
-            if (!getTile(currentTile.x, currentTile.y + 1).dug) bfs.offer(getTile(currentTile.x, currentTile.y + 1));
+            if (currentTile.isMine) {gameOver(); return;}
+            if (currentTile.nearbyMines <= 0) {
+                for (int otherX = Math.max(currentTile.x - 1, 0); otherX < Math.min(currentTile.x + 2, width); otherX++) {
+                    for (int otherY = Math.max(currentTile.y - 1, 0); otherY < Math.min(currentTile.y + 2, height); otherY++) {
+                        if (otherX == currentTile.x && otherY == currentTile.y) continue;
+                        if (getTile(otherX, otherY).dug) continue;
+                        bfs.offer(getTile(otherX, otherY));
+                    }
+                }
+            }
             currentTile.dug = true;
+        }
+    }
+
+    public void gameOver() {
+        for (ArrayList<Tile> column : board) {
+            for (Tile tile : column) {
+                tile.dug = true;
+            }
         }
     }
 
