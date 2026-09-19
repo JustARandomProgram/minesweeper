@@ -38,22 +38,23 @@ public class Controller {
             if (model.getGameState() == 0) {
                 switch (e.getButton()) {
                     case MouseEvent.BUTTON1:
-                        // System.out.println(mouseGridX + " " + mouseGridY);
                         model.dig(mouseGridX, mouseGridY);
                         break;
                     case MouseEvent.BUTTON3:
                         Tile tile = model.getTile(mouseGridX, mouseGridY);
                         if (tile.dug) return;
                         tile.flagged = !tile.flagged;
+                        if (tile.flagged) {
+                            model.incrementFlagsOnBoard();
+                        } else {
+                            model.decrementFlagsOnBoard();
+                        }
                         for (int otherX = Math.max(0, mouseGridX-1); otherX < Math.min(numOfColumns, mouseGridX+2); otherX++) {
                             for (int otherY = Math.max(0, mouseGridY-1); otherY < Math.min(numOfRows, mouseGridY+2); otherY++) {
                                 if (model.getTile(otherX,otherY).isMine) continue;
                                 model.getTile(otherX, otherY).nearbyFlags += tile.flagged ? 1 : -1;
                             }
                         }
-                        break;
-                    case MouseEvent.BUTTON2:
-                        System.out.println(model.getTile(mouseGridX, mouseGridY).isMine);
                         break;
                 }
             }
@@ -92,13 +93,13 @@ public class Controller {
     public ImageIcon getIconImage() {
         switch (model.getGameState()) {
             case -1:
-                return classes.ImageCacher.sad;
+                return classes.FileCacher.Images.sad;
 
             case 0:
-                return classes.ImageCacher.happy;
+                return classes.FileCacher.Images.happy;
 
             case 1:
-                return classes.ImageCacher.cool;
+                return classes.FileCacher.Images.cool;
         
             default:
                 return null;

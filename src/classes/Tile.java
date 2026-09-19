@@ -11,30 +11,30 @@ public class Tile {
     public boolean dug = false;
 
     public ImageIcon getImage() {
-        if (flagged) return ImageCacher.flagged;
+        if (flagged) return FileCacher.Images.flagged;
         if (dug) {
-            if (isMine) return ImageCacher.mine;
+            if (isMine) return FileCacher.Images.mine;
             switch (nearbyMines) {
                 case 1:
-                    return ImageCacher.one;
+                    return FileCacher.Images.one;
                 case 2:
-                    return ImageCacher.two;
+                    return FileCacher.Images.two;
                 case 3:
-                    return ImageCacher.three;
+                    return FileCacher.Images.three;
                 case 4:
-                    return ImageCacher.four;
+                    return FileCacher.Images.four;
                 case 5:
-                    return ImageCacher.five;
+                    return FileCacher.Images.five;
                 case 6:
-                    return ImageCacher.six;
+                    return FileCacher.Images.six;
                 case 7:
-                    return ImageCacher.seven;
+                    return FileCacher.Images.seven;
                 case 8:
-                    return ImageCacher.eight;
+                    return FileCacher.Images.eight;
                 case 0:
-                    return ImageCacher.none;
+                    return FileCacher.Images.none;
                 }
             }
-        return ImageCacher.base;
+        return FileCacher.Images.base;
     }
 }
