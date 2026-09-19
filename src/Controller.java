@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import classes.Tile;
 
 public class Controller {
@@ -41,6 +42,7 @@ public class Controller {
                     break;
                 case MouseEvent.BUTTON3:
                     Tile tile = model.getTile(mouseGridX, mouseGridY);
+                    if (tile.dug) return;
                     tile.flagged = !tile.flagged;
                     for (int otherX = Math.max(0, mouseGridX-1); otherX < Math.min(numOfColumns, mouseGridX+2); otherX++) {
                         for (int otherY = Math.max(0, mouseGridY-1); otherY < Math.min(numOfRows, mouseGridY+2); otherY++) {
@@ -48,6 +50,9 @@ public class Controller {
                             model.getTile(otherX, otherY).nearbyFlags += tile.flagged ? 1 : -1;
                         }
                     }
+                    break;
+                case MouseEvent.BUTTON2:
+                    System.out.println(model.getTile(mouseGridX, mouseGridY).isMine);
                     break;
             }
         }
@@ -80,6 +85,22 @@ public class Controller {
 
         window.setVisible(true);
         window.getTimer().start();
+    }
+
+    public ImageIcon getIconImage() {
+        switch (model.getGameState()) {
+            case -1:
+                return classes.ImageCacher.sad;
+
+            case 0:
+                return classes.ImageCacher.happy;
+
+            case 1:
+                return classes.ImageCacher.cool;
+        
+            default:
+                return null;
+        }
     }
 
     public void setUpListeners() {
