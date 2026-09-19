@@ -12,6 +12,7 @@ public class Model {
     private int width, height;
     private double mineDensity = 0.1;
     private int gameState = 0;
+    private int flagsOnBoard = 0;
 
     public Model setGridDimensions(int newWidth, int newHeight) {
         width = newWidth;
@@ -26,6 +27,7 @@ public class Model {
 
     public void generateBoard() {
         gameState = 0;
+        flagsOnBoard = 0;
         for (ArrayList<Tile> column : board) {
             column.clear();
         }
@@ -130,5 +132,13 @@ public class Model {
 
     public int getGameState() {
         return gameState;
+    }
+
+    public void incrementFlags() {
+        flagsOnBoard++;
+    }
+
+    public void decrementFlags() {
+        flagsOnBoard--;
     }
 }
