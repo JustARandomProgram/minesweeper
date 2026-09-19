@@ -90,7 +90,9 @@ public class Model {
             }
             currentTile.dug = true;
         }
-        winCondition();
+        if (gameState != -1) {
+            winCondition();
+        }
     }
 
     private void winCondition() {
