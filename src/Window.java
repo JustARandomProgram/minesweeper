@@ -19,7 +19,7 @@ public class Window extends JFrame {
 
         public void paintPanel(Graphics2D g2d) {
             g2d.fill(panel);
-            g2d.drawImage(classes.ImageCacher.start.getImage(), 337, 12, 75, 75, null);
+            g2d.drawImage(App.controller.getIconImage().getImage(), 337, 12, 75, 75, null);
         }
 
         public void paintGrid(Graphics2D g2d) {
