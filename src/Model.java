@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 import classes.Tile;
@@ -28,7 +30,10 @@ public class Model {
         for (int x = 0; x < width; x++) {
             ArrayList<Tile> column = new ArrayList<>();
             for (int y = 0; y < height; y++) {
-                column.add(y, new Tile());
+                Tile newTile = new Tile();
+                newTile.x = x;
+                newTile.y = y;
+                column.add(y, newTile);
             }
             board.add(x, column);
         }
@@ -51,6 +56,26 @@ public class Model {
                 }
             }
         }
+    }
+
+    public void dig(int x, int y) {
+        Queue<Tile> bfs = new LinkedList<>();
+        bfs.offer(getTile(x, y));
+        while (!bfs.isEmpty()) {
+            Tile currentTile = bfs.poll();
+            if (currentTile.isMine) continue;
+            if (currentTile.nearbyMines > 0) continue;
+            if (currentTile.flagged) continue;
+            if (!getTile(currentTile.x - 1, currentTile.y).dug) bfs.offer(getTile(currentTile.x - 1, currentTile.y));
+            if (!getTile(currentTile.x + 1, currentTile.y).dug) bfs.offer(getTile(currentTile.x + 1, currentTile.y));
+            if (!getTile(currentTile.x, currentTile.y - 1).dug) bfs.offer(getTile(currentTile.x, currentTile.y - 1));
+            if (!getTile(currentTile.x, currentTile.y + 1).dug) bfs.offer(getTile(currentTile.x, currentTile.y + 1));
+            currentTile.dug = true;
+        }
+    }
+
+    public Tile getTile(int x, int y) {
+        return board.get(x).get(y);
     }
 
     public ArrayList<ArrayList<Tile>> getBoard() {

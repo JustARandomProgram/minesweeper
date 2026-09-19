@@ -4,14 +4,16 @@ import javax.swing.ImageIcon;
 
 public class Tile {
     public int nearbyMines = 0;
+    public int nearbyFlags = 0;
+    public int x, y;
     public boolean flagged = false;
     public boolean isMine = false;
     public boolean dug = false;
 
     public ImageIcon getImage() {
-        if (isMine) return ImageCacher.mine;
         if (flagged) return ImageCacher.flagged;
-        if (!dug) {
+        if (dug) {
+            if (isMine) return ImageCacher.mine;
             switch (nearbyMines) {
                 case 1:
                     return ImageCacher.one;
@@ -30,9 +32,9 @@ public class Tile {
                 case 8:
                     return ImageCacher.eight;
                 case 0:
-                    return ImageCacher.none; 
+                    return ImageCacher.none;
+                }
             }
-        }
         return ImageCacher.base;
     }
 }
