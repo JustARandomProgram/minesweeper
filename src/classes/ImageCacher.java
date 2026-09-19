@@ -15,5 +15,7 @@ public class ImageCacher {
     public static final ImageIcon mine = new ImageIcon("assets/images/mine.png");
     public static final ImageIcon base = new ImageIcon("assets/images/base tile.png");
     public static final ImageIcon flagged = new ImageIcon("assets/images/flagged tile.png");
-    public static final ImageIcon start = new ImageIcon("assets/images/start.png");
+    public static final ImageIcon happy = new ImageIcon("assets/images/happy.png");
+    public static final ImageIcon sad = new ImageIcon("assets/images/sad.png");
+    public static final ImageIcon cool = new ImageIcon("assets/images/cool.png");
 }
