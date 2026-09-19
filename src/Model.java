@@ -94,7 +94,6 @@ public class Model {
     }
 
     private void winCondition() {
-        System.out.println("--------------------");
         for (Tile mine : mines) {
             for (int otherX = Math.max(mine.x - 1, 0); otherX < Math.min(mine.x + 2, width); otherX++) {
                 for (int otherY = Math.max(mine.y - 1, 0); otherY < Math.min(mine.y + 2, height); otherY++) {
