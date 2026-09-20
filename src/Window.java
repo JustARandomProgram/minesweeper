@@ -52,9 +52,8 @@ public class Window extends JFrame {
         @Override
         public void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D)g;
-            g2d.setColor(this.getBackground());
-            g2d.fill(background);
             g2d.setColor(Color.GRAY);
+            g2d.fill(background);
             paintPanel(g2d);
             paintGrid(g2d);
         }
