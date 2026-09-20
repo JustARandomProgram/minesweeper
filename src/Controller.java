@@ -35,6 +35,7 @@ public class Controller {
                     break;
                 }
             }
+            if (mouseGridX < 0 || mouseGridY < 0) return;
             if (model.getGameState() == 0) {
                 model.getStopwatch().start();
                 switch (e.getButton()) {
