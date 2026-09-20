@@ -12,6 +12,14 @@ public class Window extends JFrame {
     private Timer updateLoop;
 
     public JButton startButton;
+    public JDialog settings;
+
+    public JLabel widthText;
+    public JTextField widthField;
+    public JLabel heightText;
+    public JTextField heightField;
+    public JLabel densityText;
+    public JTextField densityField;
 
     public class Canvas extends JPanel {
         private Rectangle2D background = new Rectangle2D.Double(0, 0, width, height);
@@ -58,7 +66,13 @@ public class Window extends JFrame {
         setTitle("Minesweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        
+
+        updateLoop = new Timer(1000/60, e -> {
+            canvas.repaint();
+        });
+    }
+
+    public void init() {
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
         canvas.setLayout(null);
@@ -74,11 +88,45 @@ public class Window extends JFrame {
 
         add(canvas);
 
+        settings = new JDialog(this, "Settings Panel");
+        settings.setResizable(false);
+        settings.setLayout(new FlowLayout());
+        settings.setLocationRelativeTo(this);
+
+        widthText = new JLabel("Width: ");
+        widthText.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        widthText.setPreferredSize(new Dimension(100, 50));
+        settings.add(widthText);
+
+        widthField = new JTextField(String.valueOf(App.controller.getGridDimensions().width));
+        widthField.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        widthField.setPreferredSize(new Dimension(200, 50));
+        settings.add(widthField);
+
+        heightText = new JLabel("Height: ");
+        heightText.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        heightText.setPreferredSize(new Dimension(100, 50));
+        settings.add(heightText);
+
+        heightField = new JTextField(String.valueOf(App.controller.getGridDimensions().height));
+        heightField.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        heightField.setPreferredSize(new Dimension(200, 50));
+        settings.add(heightField);
+        
+        densityText = new JLabel("Density: ");
+        densityText.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        densityText.setPreferredSize(new Dimension(100, 50));
+        settings.add(densityText);
+
+        densityField = new JTextField(String.valueOf(App.controller.getMineDensity()));
+        densityField.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(25f));
+        densityField.setPreferredSize(new Dimension(200, 50));
+        settings.add(densityField);
+
+        settings.pack();
+
         pack();
         setLocationRelativeTo(null);
-        updateLoop = new Timer(1000/60, e -> {
-            canvas.repaint();
-        });
     }
 
     public Canvas getCanvas() {

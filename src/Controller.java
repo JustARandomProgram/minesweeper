@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import classes.Tile;
 
@@ -84,7 +85,14 @@ public class Controller {
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                model.generateBoard();
+            }
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    model.generateBoard();
+                    break;
+                case KeyEvent.VK_X:
+                    window.settings.setVisible(true);
+                    break;
             }
         }
 
@@ -104,10 +112,12 @@ public class Controller {
     }
 
     public void init() {
-        setUpListeners();
         model.setGridDimensions(10, 10);
+        model.setMineDensity(0.1);
         model.generateBoard();
-
+        
+        window.init();
+        setUpListeners();
         window.setVisible(true);
         window.getUpdateLoop().start();
     }
@@ -134,6 +144,73 @@ public class Controller {
         });
         window.getCanvas().addMouseListener(new MouseInput());
         window.addKeyListener(new KeyInput());
+
+        window.widthField.addActionListener(e -> {
+            try {
+                int val = Integer.valueOf(window.widthField.getText());
+                if (val <= 1) {
+                    throw new IllegalArgumentException();
+                }
+                model.setGridDimensions(val, model.getGridDimensions().height);
+                model.generateBoard();
+            } catch (NumberFormatException ex) {
+                window.widthField.setText(String.valueOf(model.getGridDimensions().width));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Must be a number", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                window.widthField.setText(String.valueOf(model.getGridDimensions().width));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Number cannot be less than one", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        window.heightField.addActionListener(e -> {
+            try {
+                int val = Integer.valueOf(window.heightField.getText());
+                if (val <= 1) {
+                    throw new IllegalArgumentException();
+                }
+                model.setGridDimensions(model.getGridDimensions().width, val);
+                model.generateBoard();
+            } catch (NumberFormatException ex) {
+                window.heightField.setText(String.valueOf(model.getGridDimensions().height));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Must be a number", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                window.heightField.setText(String.valueOf(model.getGridDimensions().height));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Number cannot be less than one", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        window.densityField.addActionListener(e -> {
+            try {
+                double val = Double.valueOf(window.densityField.getText());
+                if (val > 1 || val < 0) {
+                    throw new IllegalArgumentException();
+                }
+                model.setMineDensity(val);
+                model.generateBoard();
+            } catch (NumberFormatException ex) {
+                window.densityField.setText(String.valueOf(model.getMineDensity()));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Must be a number", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                window.densityField.setText(String.valueOf(model.getMineDensity()));
+                JOptionPane.showMessageDialog(window, "Invalid Argument: Number must be between 0 and 1", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+
+
+    public Controller setGridDimensions(int width, int height) {
+        model.setGridDimensions(width, height);
+        return this;
+    }
+
+    public Controller setMineDensity(double newDensity) {
+        model.setMineDensity(newDensity);
+        return this;
+    }
+
+    public double getMineDensity() {
+        return model.getMineDensity();
     }
 
     public ArrayList<ArrayList<Tile>> getBoard() {
