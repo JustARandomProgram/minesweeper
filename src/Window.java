@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Window extends JFrame {
     protected final int width, height;
     private Canvas canvas;
-    private Timer timer;
+    private Timer updateLoop;
 
     public JButton startButton;
 
@@ -20,6 +20,13 @@ public class Window extends JFrame {
         public void paintPanel(Graphics2D g2d) {
             g2d.fill(panel);
             g2d.drawImage(App.controller.getIconImage().getImage(), 337, 12, 75, 75, null);
+            g2d.setColor(Color.black);
+            g2d.fill(new Rectangle2D.Double(50,12,200,75));
+            g2d.fill(new Rectangle2D.Double(500,12,200,75));
+            g2d.setFont(classes.FileCacher.Fonts.sevenSegFont.deriveFont(100f));
+            g2d.setColor(Color.red);
+            g2d.drawString(String.valueOf(App.controller.remainingFlags()), 50, 85);
+            g2d.drawString(String.valueOf(App.controller.getTotalTime()), 500, 85);
         }
 
         public void paintGrid(Graphics2D g2d) {
@@ -68,7 +75,7 @@ public class Window extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
-        timer = new Timer(1000/60, e -> {
+        updateLoop = new Timer(1000/60, e -> {
             canvas.repaint();
         });
     }
@@ -77,7 +84,7 @@ public class Window extends JFrame {
         return canvas;
     }
 
-    public Timer getTimer() {
-        return timer;
+    public Timer getUpdateLoop() {
+        return updateLoop;
     }
 }

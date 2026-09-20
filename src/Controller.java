@@ -36,6 +36,7 @@ public class Controller {
                 }
             }
             if (model.getGameState() == 0) {
+                model.getStopwatch().start();
                 switch (e.getButton()) {
                     case MouseEvent.BUTTON1:
                         model.dig(mouseGridX, mouseGridY);
@@ -87,7 +88,7 @@ public class Controller {
         model.generateBoard();
 
         window.setVisible(true);
-        window.getTimer().start();
+        window.getUpdateLoop().start();
     }
 
     public ImageIcon getIconImage() {
@@ -119,5 +120,13 @@ public class Controller {
 
     public Dimension getGridDimensions() {
         return model.getGridDimensions();
+    }
+
+    public int remainingFlags() {
+        return model.remainingFlags();
+    }
+
+    public int getTotalTime() {
+        return model.getTotalTime();
     }
 }

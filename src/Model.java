@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
+import javax.swing.Timer;
+
 import classes.Tile;
 
 public class Model {
@@ -13,6 +15,10 @@ public class Model {
     private double mineDensity = 0.1;
     private int gameState = 0;
     private int flagsOnBoard = 0;
+    private int totalTime = 0;
+    private Timer stopwatch = new Timer(1000, e -> {
+        totalTime += 1;
+    });
 
     public Model setGridDimensions(int newWidth, int newHeight) {
         width = newWidth;
@@ -28,6 +34,7 @@ public class Model {
     public void generateBoard() {
         gameState = 0;
         flagsOnBoard = 0;
+        totalTime = 0;
         for (ArrayList<Tile> column : board) {
             column.clear();
         }
@@ -107,6 +114,7 @@ public class Model {
             }
         }
         gameState = 1;
+        stopwatch.stop();
     }
 
     private void gameOver() {
@@ -116,6 +124,7 @@ public class Model {
             }
         }
         gameState = -1;
+        stopwatch.stop();
     }
 
     public Tile getTile(int x, int y) {
@@ -144,5 +153,17 @@ public class Model {
 
     public int getFlagsOnBoard() {
         return flagsOnBoard;
+    }
+
+    public int remainingFlags() {
+        return mines.size() - flagsOnBoard;
+    }
+
+    public Timer getStopwatch() {
+        return stopwatch;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
     }
 }
