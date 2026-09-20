@@ -140,6 +140,10 @@ public class Model {
         return new Dimension(width, height);
     }
 
+    public double getMineDensity() {
+        return mineDensity;
+    }
+
     public int getGameState() {
         return gameState;
     }
