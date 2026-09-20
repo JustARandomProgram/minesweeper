@@ -35,6 +35,7 @@ public class Model {
         gameState = 0;
         flagsOnBoard = 0;
         totalTime = 0;
+        stopwatch.stop();
         for (ArrayList<Tile> column : board) {
             column.clear();
         }

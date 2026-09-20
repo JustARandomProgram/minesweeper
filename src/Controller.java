@@ -1,10 +1,13 @@
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
 import classes.Tile;
 
 public class Controller {
@@ -73,6 +76,23 @@ public class Controller {
 
     }
 
+    private class KeyInput implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {}
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                model.generateBoard();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {}
+
+    }
+
     public Controller setModel(Model newModel) {
         model = newModel;
         return this;
@@ -113,6 +133,7 @@ public class Controller {
             model.generateBoard();
         });
         window.getCanvas().addMouseListener(new MouseInput());
+        window.addKeyListener(new KeyInput());
     }
 
     public ArrayList<ArrayList<Tile>> getBoard() {

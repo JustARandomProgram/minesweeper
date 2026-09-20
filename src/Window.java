@@ -69,6 +69,7 @@ public class Window extends JFrame {
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
         startButton.setFocusPainted(false);
+        startButton.setFocusable(false);
         canvas.add(startButton);
 
         add(canvas);
