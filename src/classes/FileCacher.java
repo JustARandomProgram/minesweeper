@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class FileCacher {
-    private static final String assetsDirectory = "assets";
+    private static final String assetsDirectory = "./assets";
 
     public static void init() {
         try {
