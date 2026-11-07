@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Window extends JFrame {
     protected final int width, height;
     private Canvas canvas;
-    private Timer updateLoop;
 
     public JButton startButton;
     public JDialog settings;
@@ -65,10 +64,6 @@ public class Window extends JFrame {
         setTitle("Minesweeper");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-
-        updateLoop = new Timer(1000/60, e -> {
-            canvas.repaint();
-        });
     }
 
     public void init() {
@@ -130,9 +125,5 @@ public class Window extends JFrame {
 
     public Canvas getCanvas() {
         return canvas;
-    }
-
-    public Timer getUpdateLoop() {
-        return updateLoop;
     }
 }

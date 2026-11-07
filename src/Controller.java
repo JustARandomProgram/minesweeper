@@ -5,6 +5,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -14,6 +17,7 @@ import classes.Tile;
 public class Controller {
     private Model model;
     private Window window;
+    private ScheduledExecutorService master = Executors.newSingleThreadScheduledExecutor();
     
     private class MouseInput implements MouseListener {
 
@@ -119,7 +123,9 @@ public class Controller {
         window.init();
         setUpListeners();
         window.setVisible(true);
-        window.getUpdateLoop().start();
+        master.scheduleAtFixedRate(() -> {
+            window.getCanvas().repaint();
+        }, 0, 1000/60, TimeUnit.MILLISECONDS);
     }
 
     public ImageIcon getIconImage() {
